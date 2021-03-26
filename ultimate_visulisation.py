@@ -893,7 +893,7 @@ def render():
 
     pygame.display.update()
 
-
+"""
 
 def main(list_moves,score):
     global x_turn, o_turn, images, draw
@@ -957,6 +957,153 @@ while True:
             board = Board()
             list_moves = board.algo1_vs_algo2(algo1, algo2, first_algo_play = first_algo_play, verbose_big=False,verbose_board=False)
             main(list_moves,board.score())
+
+        menu = pygame_menu.Menu(int(WIDTH*0.8), int(WIDTH*0.8), 'Bienvenue !',
+                            theme=pygame_menu.themes.THEME_DARK)
+
+
+        menu.add_label('Note : Veuillez patienter quelques \n minutes après le lancement \n')
+        menu.add_selector('Algorithme 1 :', [('random',1), ('flat',1), ('UCB',1), ('UCT',1), ('RAVE',1), ('GRAVE',1), ('SequentialHalving',1), ('SHUSS',1)], onchange=set_difficulty)
+        menu.add_selector('Algorithme 2  :', [('random',2), ('flat',2), ('UCB',2), ('UCT',2), ('RAVE',2), ('GRAVE',2), ('SequentialHalving',2), ('SHUSS',2)], onchange=set_difficulty)
+
+        menu.add_button('Commencer le jeu', start_the_game)
+        menu.add_button('Quitter', pygame_menu.events.EXIT)
+
+        menu.mainloop(surface)
+
+        break
+"""
+    ####################################################################################################"
+    # 
+    # 
+
+def render_algo1_vs_algo2(b, algo1, algo2, first_algo_play=Cross, verbose_big=False,verbose_board=False):
+        
+        algorithms = {'random': random_algo, 'flat': flat, 'UCB': UCB, 'UCT':BestMoveUCT, 'RAVE': BestMoveRAVE, 'GRAVE':BestMoveGRAVE,
+                     'SequentialHalving': SequentialHalving, 'SHUSS' : SHUSS}
+
+        global x_turn, o_turn, images, draw
+
+        images = []
+        draw = False
+
+        run = True
+
+        x_turn = True
+        o_turn = False
+
+        game_array = initialize_grid()
+        render()
+
+        while run:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+
+        
+            moves = b.legalMoves()
+            score = b.score()
+            move = None
+            if verbose_big ==True:
+                print(b.big_board)
+            if verbose_board ==True:
+                print(b.board)
+            #if score != -1 :
+            #    return moves_list
+            if b.turn == first_algo_play:
+                move = algorithms[algo1](b)
+                b.play(move)
+                #moves_list.append(move)
+            else:
+                move = algorithms[algo2](b)
+                b.play(move)
+                #moves_list.append(move)
+            
+            x = move.y*gap + gap//2  + move.square%3*gap*3
+            y = move.x*gap + gap//2  + move.square//3*3*gap
+            if x_turn:  # If it's X's turn
+                images.append((x, y, X_IMAGE))
+                x_turn = False
+                o_turn = True
+                game_array[move.x][move.y] = (x, y, 'x', False)
+
+            elif o_turn:  # If it's O's turn
+                images.append((x, y, O_IMAGE))
+                x_turn = True
+                o_turn = False
+                game_array[move.x][move.y] = (x, y, 'o', False)
+
+            render()
+            time.sleep(0.5)
+
+            if has_won(game_array,score) or has_drawn(game_array,score):
+                run = False
+
+"""
+def play(score):
+    global x_turn, o_turn, images, draw
+
+    images = []
+    draw = False
+
+    run = True
+
+    x_turn = True
+    o_turn = False
+
+    game_array = initialize_grid()
+    render()
+
+    while run:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+
+
+
+        for move in list_moves :
+            x = move.y*gap + gap//2  + move.square%3*gap*3
+            y = move.x*gap + gap//2  + move.square//3*3*gap
+            if x_turn:  # If it's X's turn
+                images.append((x, y, X_IMAGE))
+                x_turn = False
+                o_turn = True
+                game_array[move.x][move.y] = (x, y, 'x', False)
+
+            elif o_turn:  # If it's O's turn
+                images.append((x, y, O_IMAGE))
+                x_turn = True
+                o_turn = False
+                game_array[move.x][move.y] = (x, y, 'o', False)
+
+            render()
+
+            time.sleep(sleeptime)
+
+
+        if has_won(game_array,score) or has_drawn(game_array,score):
+            run = False
+"""
+
+while True:
+    if __name__ == '__main__':
+
+
+        pygame.init()
+        surface = pygame.display.set_mode((int(WIDTH), int(WIDTH)))
+        algo1 = 'random'
+        algo2 = 'random'
+        def set_difficulty(value, difficulty):
+            # Do the job here !
+            global algo1, algo2
+            if difficulty == 1:
+                algo1 = value[0][0]
+            if difficulty == 2:
+                algo2 = value[0][0]
+
+        def start_the_game():
+            board = Board()
+            render_algo1_vs_algo2(board, algo1, algo2, first_algo_play, verbose_big = False, verbose_board = False)
 
         menu = pygame_menu.Menu(int(WIDTH*0.8), int(WIDTH*0.8), 'Bienvenue !',
                             theme=pygame_menu.themes.THEME_DARK)
