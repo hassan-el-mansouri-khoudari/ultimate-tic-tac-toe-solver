@@ -16,7 +16,7 @@ Once a local board is completely full, no more movement can be played on this bo
 ## Graphical interface:
 We have developed a graphical interface using the PyGame library. User can choose which algorithm player 1 ("x") uses and which algorithm player uses 2 ("o"). The algorithms used for: random, Flat, UCB, UCT, RAVE, GRAVE, SequentialHalving and SHUSS.
 
-<p float="left">
+<p float="center">
   <img src="./Images/Home_page.PNG" width="40%"/>
   <img src="./Images/game.PNG" width="40%"/>
 </p>
