@@ -2,7 +2,9 @@
 
 We have chosen to apply MONTE-CARLO Tree search methods on the TIC-TAC-TOE game in its ultimate version. It consists of a board game consisting of nine tic-tac-toe boards arranged in 3 × 3 grid. Players take turns in the smaller tic-tac-toe boards until one of them wins in the biggest tic-tac-toe table.
 
-<img src="./Images/Incomplete_Ultimate_Tic-Tac-Toe_Board.png" width="30%" class="center">
+<p align="center">
+  <img src="./Images/Incomplete_Ultimate_Tic-Tac-Toe_Board.png" width="30%" class="center">
+</p>
 
 
 ### Rules:
@@ -15,8 +17,8 @@ Once a local board is completely full, no more movement can be played on this bo
 We have developed a graphical interface using the PyGame library. User can choose which algorithm player 1 ("x") uses and which algorithm player uses 2 ("o"). The algorithms used for: random, Flat, UCB, UCT, RAVE, GRAVE, SequentialHalving and SHUSS.
 
 <p float="left">
-  <img src="./Images/Home_page.png" width="30%"/>
-  <img src="./Images/game.png" width="30%"/>
+  <img src="./Images/Home_page.PNG" width="40%"/>
+  <img src="./Images/game.PNG" width="40%"/>
 </p>
 
 
